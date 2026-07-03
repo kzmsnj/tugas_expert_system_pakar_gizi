@@ -1,14 +1,13 @@
 import math
 from knowledge_base import REKOMENDASI_GIZI
 
-# Nilai centroid (acuan minimum distance) yang sudah diperluas
 CENTROIDS = {
     'D01': {'bmi': 28.0, 'konsumsi_manis': 8.0, 'aktivitas': 1.0},
     'D02': {'bmi': 17.0, 'konsumsi_manis': 4.0, 'aktivitas': 5.0},
     'D03': {'bmi': 22.0, 'konsumsi_manis': 3.0, 'aktivitas': 3.0},
     'D04': {'bmi': 23.0, 'konsumsi_manis': 12.0, 'aktivitas': 3.0},
-    'D05': {'bmi': 21.5, 'konsumsi_manis': 5.0, 'aktivitas': 1.5}, # Titik acuan BMI Normal Sedentary
-    'D06': {'bmi': 22.0, 'konsumsi_manis': 4.0, 'aktivitas': 4.5}  # Titik acuan BMI Normal Aktif
+    'D05': {'bmi': 21.5, 'konsumsi_manis': 5.0, 'aktivitas': 1.5}, 
+    'D06': {'bmi': 22.0, 'konsumsi_manis': 4.0, 'aktivitas': 4.5}  
 }
 
 def hitung_jarak(user, centroid):

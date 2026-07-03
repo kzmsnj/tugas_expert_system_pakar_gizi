@@ -230,7 +230,6 @@
             const kategoriEl = document.getElementById('bmi-kategori');
             const hiddenInput = document.getElementById('bmi_value_hidden');
 
-            // Handling saat input dibersihkan atau belum valid
             if (!berat || !tinggiCm || tinggiCm <= 0) {
                 hasilEl.textContent = '-';
                 kategoriEl.textContent = 'menunggu data';
@@ -238,7 +237,6 @@
                 return;
             }
 
-            // Kalkulasi matematis Indeks Massa Tubuh
             const tinggiM = tinggiCm / 100;
             const bmi = berat / (tinggiM * tinggiM);
             const bmiRounded = bmi.toFixed(1);
@@ -250,7 +248,6 @@
                 kategori = 'Obesitas';
             }
 
-            // Injeksi nilai untuk antarmuka pengguna dan payload tersembunyi
             hasilEl.textContent = bmiRounded;
             kategoriEl.textContent = kategori;
             hiddenInput.value = bmiRounded;
@@ -259,7 +256,7 @@
         document.getElementById('form-gizi').addEventListener('submit', function (e) {
             const hiddenInput = document.getElementById('bmi_value_hidden');
             if (!hiddenInput.value) {
-                e.preventDefault(); // Mencegah pengiriman data cacat ke mesin inferensi
+                e.preventDefault(); 
                 hitungBMI();
                 document.getElementById('berat').focus();
                 alert('Peringatan: Evaluasi Indeks Massa Tubuh (Langkah 1) belum terisi dengan data numerik yang valid.');

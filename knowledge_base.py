@@ -1,4 +1,3 @@
-# Data Gejala / Kondisi Input
 KONDISI = {
     'K01': 'Mengalami Obesitas (BMI >= 25)',
     'K02': 'Mengalami Underweight (BMI < 18.5)',
@@ -9,7 +8,6 @@ KONDISI = {
     'K06': 'Aktivitas Fisik Tinggi (Sering Olahraga / Pekerja Berat)'
 }
 
-# Data Kesimpulan / Rekomendasi 
 REKOMENDASI_GIZI = {
     'D01': {
         'nama': 'Manajemen Berat Badan & Defisit Kalori Bertahap',
@@ -35,7 +33,6 @@ REKOMENDASI_GIZI = {
         'menu': 'Sarapan: Roti gandum utuh & putih telur. Makan Siang: Nasi merah (porsi terkontrol), pepes ikan, & sayur berserat tinggi. Makan Malam: Brokoli kukus & dada ayam panggang.',
         'gaya_hidup': 'Pangkas konsumsi gula cair (minuman manis kemasan/kopi kekinian). Biasakan berjalan kaki 10-15 menit setiap selesai makan besar untuk membantu otot menyerap glukosa.'
     },
-    # 2 REKOMENDASI BARU UNTUK BMI NORMAL
     'D05': {
         'nama': 'Pemeliharaan Kebugaran & Gizi Seimbang',
         'deskripsi': 'Berat badan Anda sudah ideal, namun kurangnya aktivitas fisik dapat menurunkan metabolisme. Fokus pada komposisi gizi seimbang harian.',
@@ -50,13 +47,11 @@ REKOMENDASI_GIZI = {
     }
 }
 
-# Rule Base & Nilai MB (Measure of Belief) Pakar
 RULES = [
     {'id': 'R1', 'kondisi': ['K01', 'K05'], 'kesimpulan': 'D01', 'mb': 0.8},
     {'id': 'R2', 'kondisi': ['K02', 'K06'], 'kesimpulan': 'D02', 'mb': 0.9},
     {'id': 'R3', 'kondisi': ['K03'], 'kesimpulan': 'D03', 'mb': 0.85},
     {'id': 'R4', 'kondisi': ['K04'], 'kesimpulan': 'D04', 'mb': 0.9},
-    # 2 ATURAN BARU
-    {'id': 'R5', 'kondisi': ['K07', 'K05'], 'kesimpulan': 'D05', 'mb': 0.8}, # Normal tapi jarang gerak
-    {'id': 'R6', 'kondisi': ['K07', 'K06'], 'kesimpulan': 'D06', 'mb': 0.9}  # Normal dan sering gerak
+    {'id': 'R5', 'kondisi': ['K07', 'K05'], 'kesimpulan': 'D05', 'mb': 0.8}, 
+    {'id': 'R6', 'kondisi': ['K07', 'K06'], 'kesimpulan': 'D06', 'mb': 0.9}  
 ]

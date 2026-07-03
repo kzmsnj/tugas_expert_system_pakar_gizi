@@ -14,7 +14,6 @@ def gabungkan_hasil(hasil_cf, hasil_distance):
     """
     gabungan = {}
 
-    # 1. Pindahkan data dari Certainty Factor ke dictionary gabungan
     for item in hasil_cf or []:
         gabungan[item['kode']] = {
             'kode': item['kode'],
@@ -26,7 +25,6 @@ def gabungkan_hasil(hasil_cf, hasil_distance):
             'skor_fisik': None
         }
 
-    # 2. Hitung dan normalisasi skor kedekatan fisik (Minimum Distance Classifier)
     if hasil_distance:
         jarak_semua = [d['jarak'] for d in hasil_distance]
         jarak_min, jarak_max = min(jarak_semua), max(jarak_semua)
@@ -35,7 +33,6 @@ def gabungkan_hasil(hasil_cf, hasil_distance):
             if jarak_max == jarak_min:
                 skor_fisik = 100.0
             else:
-                # Semakin kecil nilai jarak, semakin tinggi persentase kesesuaiannya
                 skor_fisik = round((1 - (item['jarak'] - jarak_min) / (jarak_max - jarak_min)) * 100, 1)
 
             if item['kode'] in gabungan:
@@ -51,7 +48,6 @@ def gabungkan_hasil(hasil_cf, hasil_distance):
                     'skor_fisik': skor_fisik
                 }
 
-    # 3. Proses pembobotan nilai akhir (Metode Gabungan Hybrid)
     hasil_akhir = []
     for item in gabungan.values():
         sg, sf = item['skor_gejala'], item['skor_fisik']
@@ -63,7 +59,6 @@ def gabungkan_hasil(hasil_cf, hasil_distance):
 
         hasil_akhir.append(item)
 
-    # 4. Urutkan secara descending dan HANYA AMBIL 1 REKOMENDASI TERBAIK (Index ke-0)
     hasil_terurut = sorted(hasil_akhir, key=lambda x: x['skor_gabungan'], reverse=True)
     return hasil_terurut[:1]
 
@@ -73,24 +68,21 @@ def index():
     rekomendasi = None
     input_kosong = False
 
-    # FILTER DATA: Hanya ambil kondisi kesehatan yang mutlak harus dijawab melalui kuesioner.
-    # K01, K02, K07 (BMI) serta K05 & K06 (Aktivitas) disembunyikan agar dievaluasi otomatis oleh backend.
+
     kondisi_manual = {k: KONDISI[k] for k in ['K03', 'K04'] if k in KONDISI}
 
     if request.method == 'POST':
         user_responses = {}
         total_skor = 0
 
-        # 1. Ambil input dari kuesioner manual (Maag & Riwayat Diabetes)
         for kode in kondisi_manual.keys():
             val = float(request.form.get(kode, 0))
             total_skor += val
             if val > 0:
                 user_responses[kode] = val
 
-        # 2. Ambil data fisik numerik dan parameter kebiasaan gaya hidup
         bmi_inp = request.form.get('bmi_value')
-        manis_inp = request.form.get('manis_value')      # Pengganti indikator gula darah medis awal
+        manis_inp = request.form.get('manis_value')      
         aktivitas_inp = request.form.get('aktivitas_value')
 
         hasil_distance = None
@@ -101,27 +93,23 @@ def index():
                 manis_val = float(manis_inp)
                 akt_val = float(aktivitas_inp)
 
-                # 3. AUTOMATIC INFERENCE LOGIC (Sinkronisasi CF dengan Data Fisik)
-                # Menyimpulkan status Obesitas, Underweight, atau Normal secara mandiri berdasarkan nilai BMI
                 if bmi_val >= 25.0:
-                    user_responses['K01'] = 1.0  # Kepastian mutlak Obesitas
+                    user_responses['K01'] = 1.0  
                     total_skor += 1
                 elif bmi_val < 18.5:
-                    user_responses['K02'] = 1.0  # Kepastian mutlak Underweight
+                    user_responses['K02'] = 1.0  
                     total_skor += 1
                 else:
-                    user_responses['K07'] = 1.0  # Kepastian mutlak BMI Normal (Range 18.5 - 24.9)
+                    user_responses['K07'] = 1.0  
                     total_skor += 1
 
-                # Menyimpulkan status tingkat aktivitas fisik berdasarkan pilihan dropdown
                 if akt_val <= 2:
-                    user_responses['K05'] = 1.0  # Kepastian mutlak Sedentary / Kurang Aktivitas
+                    user_responses['K05'] = 1.0  
                     total_skor += 1
                 elif akt_val >= 4:
-                    user_responses['K06'] = 1.0  # Kepastian mutlak Aktivitas Tinggi
+                    user_responses['K06'] = 1.0  
                     total_skor += 1
 
-                # 4. Jalankan inferensi Minimum Distance Classifier
                 user_numerik = {
                     'bmi': bmi_val,
                     'konsumsi_manis': manis_val,
@@ -130,13 +118,10 @@ def index():
                 hasil_distance = klasifikasi_minimum_distance(user_numerik)
 
             except ValueError:
-                # Mengamankan eksekusi dari input yang tidak valid (Error Handling)
                 hasil_distance = None
 
-        # 5. Jalankan inferensi Certainty Factor menggunakan basis aturan yang sudah disinkronkan
         hasil_cf = hitung_certainty_factor(user_responses) if total_skor > 0 else []
 
-        # Validasi akhir untuk memastikan payload formulir tidak kosong
         if total_skor == 0 and not hasil_distance:
             input_kosong = True
         else:
