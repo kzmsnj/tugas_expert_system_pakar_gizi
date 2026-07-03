@@ -12,7 +12,7 @@ def index():
     input_kosong = False
     
     if request.method == 'POST':
-        # --- ALUR LOGIKA CERTAINTY FACTOR ---
+        # hitung CF dari form gejala
         user_responses = {}
         total_skor = 0
         
@@ -24,15 +24,14 @@ def index():
                 
         if total_skor > 0:
             hasil = hitung_certainty_factor(user_responses)
-            
-        # --- ALUR LOGIKA MINIMUM DISTANCE CLASSIFIER (DENGAN VALIDASI) ---
+
+        # form kedua: fitur numerik buat distance classifier
         bmi_inp = request.form.get('bmi_value')
         gula_inp = request.form.get('gula_value')
         aktivitas_inp = request.form.get('aktivitas_value')
         
         if bmi_inp and gula_inp and aktivitas_inp:
             try:
-                # Mengonversi string ke float/int secara aman
                 user_numerik = {
                     'bmi': float(bmi_inp),
                     'gula': float(gula_inp),
@@ -40,7 +39,7 @@ def index():
                 }
                 hasil_distance = klasifikasi_minimum_distance(user_numerik)
             except ValueError:
-                # Menangani error jika user memasukkan karakter ilegal/bukan angka
+                # input bukan angka
                 hasil_distance = None
             
         # Handle jika seluruh form kosong total

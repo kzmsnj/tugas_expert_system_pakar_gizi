@@ -1,7 +1,7 @@
 import math
 from knowledge_base import DIET_PLANS
 
-# 1. Definisi acuan nilai ideal (Centroid) tiap kelas diet
+# nilai centroid tiap kelas diet (acuan)
 CENTROIDS = {
     'D01': {'bmi': 28.0, 'gula': 90.0, 'aktivitas': 1.0},
     'D02': {'bmi': 17.0, 'gula': 90.0, 'aktivitas': 5.0},
@@ -10,23 +10,16 @@ CENTROIDS = {
 }
 
 def hitung_jarak(user, centroid):
-    """
-    Menghitung Jarak Euclidean antara vektor user dan vektor centroid.
-    """
+    # jarak euclidean antara data user dan centroid
     selisih_bmi = user['bmi'] - centroid['bmi']
     selisih_gula = user['gula'] - centroid['gula']
     selisih_aktivitas = user['aktivitas'] - centroid['aktivitas']
-    
-    # Rumus Jarak Euclidean: akar( Δx^2 + Δy^2 + Δz^2 )
+
     return math.sqrt((selisih_bmi ** 2) + (selisih_gula ** 2) + (selisih_aktivitas ** 2))
 
 def klasifikasi_minimum_distance(user_numerik):
-    """
-    Melakukan klasifikasi dengan mencari jarak terkecil ke centroid.
-    """
     hasil_jarak = []
-    
-    # Hitung jarak untuk setiap centroid kelas diet
+
     for kode, centroid in CENTROIDS.items():
         jarak = hitung_jarak(user_numerik, centroid)
         
@@ -38,5 +31,4 @@ def klasifikasi_minimum_distance(user_numerik):
             'jarak': round(jarak, 2)
         })
         
-    # Urutkan hasil dari jarak terkecil ke terbesar
     return sorted(hasil_jarak, key=lambda x: x['jarak'])

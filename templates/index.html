@@ -44,10 +44,8 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            <!-- ====== SEKTOR KIRI: INPUT FORM DATA USER ====== -->
             <form method="POST" class="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm space-y-6">
                 
-                <!-- BAGIAN INPUT GEJALA UNTUK INFERENSI CERTAINTY FACTOR -->
                 <div>
                     <div class="border-b border-slate-100 pb-3 mb-4">
                         <h2 class="font-bold text-base text-slate-900">Form 1: Input Gejala Kualitatif (Certainty Factor)</h2>
@@ -71,8 +69,7 @@
                         {% endfor %}
                     </div>
                 </div>
-
-                <!-- BAGIAN INPUT METRIK NUMERIK UNTUK DISTANCE CLASSIFIER -->
+                
                 <div class="pt-4 border-t border-slate-100">
                     <div class="border-b border-slate-100 pb-3 mb-4">
                         <h2 class="font-bold text-base text-slate-900">Form 2: Input Fitur Numerik (Minimum Distance)</h2>
@@ -110,11 +107,9 @@
                     Proses Analisis Komparatif
                 </button>
             </form>
-
-            <!-- ====== SEKTOR KANAN: PANEL OUTPUT HASIL PERHITUNGAN ====== -->
+            
             <div class="lg:col-span-5 space-y-6 sticky top-8">
                 
-                <!-- BLOK UTAMA - TAMPILAN OUTPUT CERTAINTY FACTOR -->
                 <div class="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm min-h-[220px] flex flex-col justify-between">
                     <div>
                         <div class="border-b border-slate-100 pb-3 mb-4">
@@ -152,8 +147,7 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <!-- BLOK TAMBAHAN - TAMPILAN OUTPUT DISTANCE CLASSIFIER (MATERI #2) -->
+                
                 {% if hasil_distance %}
                 <div class="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm flex flex-col justify-between">
                     <div>
@@ -174,7 +168,7 @@
                                 
                                 {% if loop.first %}
                                 <div class="my-1 inline-block bg-indigo-200 text-indigo-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">
-                                    ✓ Rekomendasi Utama (Jarak Terkecil)
+                                    Rekomendasi Utama
                                 </div>
                                 {% endif %}
                                 
