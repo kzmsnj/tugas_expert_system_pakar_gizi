@@ -27,6 +27,7 @@ def hitung_certainty_factor(user_responses):
     for kode, cf_nilai in hasil_diet.items():
         if cf_nilai > 0:
             rekomendasi_akhir.append({
+                'kode': kode,
                 'nama': DIET_PLANS[kode]['nama'],
                 'deskripsi': DIET_PLANS[kode]['deskripsi'],
                 'menu': DIET_PLANS[kode]['menu'],
