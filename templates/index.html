@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriMBG — Rekomendasi Diet</title>
+    <title>NutriMBG — Pakar Gizi & Gaya Hidup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,7 +27,7 @@
         <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">67</div>
-                <span class="font-bold text-lg text-slate-900 tracking-tight">NutriMBG <span class="text-emerald-600 font-normal text-sm">Gizi</span></span>
+                <span class="font-bold text-lg text-slate-900 tracking-tight">NutriMBG <span class="text-emerald-600 font-normal text-sm">Kesehatan & Gizi</span></span>
             </div>
         </div>
     </nav>
@@ -35,10 +35,10 @@
     <main class="max-w-5xl mx-auto px-4 py-8 lg:py-12">
         <div class="text-center md:text-left md:max-w-2xl mb-10">
             <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">
-                Yuk, Cari Tahu Diet yang Cocok Untukmu
+                Sistem Pakar Rekomendasi Gizi & Kesehatan Ringan
             </h1>
             <p class="text-sm md:text-base text-slate-600 leading-relaxed">
-                Ikuti 3 langkah singkat di bawah ini. Setelah selesai, kamu akan mendapat rekomendasi diet yang paling sesuai dengan kondisi tubuhmu.
+                Ikuti 3 langkah evaluasi klinis singkat di bawah ini. Sistem pakar kami akan menganalisis profil Anda untuk menyusun rencana gizi dan intervensi gaya hidup yang optimal.
             </p>
         </div>
 
@@ -46,15 +46,14 @@
 
             <form method="POST" id="form-gizi" class="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm space-y-8">
 
-                <!-- Langkah 1: BMI -->
                 <div class="flex gap-4">
                     <div class="flex flex-col items-center shrink-0">
                         <div class="w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold flex items-center justify-center">1</div>
                         <div class="w-px flex-1 bg-slate-200 mt-2"></div>
                     </div>
                     <div class="flex-1 pb-2">
-                        <h2 class="font-bold text-base text-slate-900">Hitung BMI Kamu</h2>
-                        <p class="text-xs text-slate-500 mb-4">Masukkan berat dan tinggi badanmu, BMI akan otomatis dihitung.</p>
+                        <h2 class="font-bold text-base text-slate-900">Evaluasi Indeks Massa Tubuh</h2>
+                        <p class="text-xs text-slate-500 mb-4">Masukkan metrik fisik dasar Anda. Sistem akan mengalkulasi status metabolisme secara otomatis.</p>
 
                         <div class="space-y-3">
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
@@ -72,10 +71,10 @@
                             </div>
 
                             <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-between">
-                                <span class="text-sm font-medium text-emerald-900">BMI Kamu</span>
+                                <span class="text-sm font-medium text-emerald-900">Hasil Kalkulasi BMI</span>
                                 <span class="text-sm font-bold text-emerald-800">
                                     <span id="bmi-hasil">-</span>
-                                    (<span id="bmi-kategori">isi data di atas</span>)
+                                    (<span id="bmi-kategori">menunggu data</span>)
                                 </span>
                             </div>
 
@@ -84,15 +83,14 @@
                     </div>
                 </div>
 
-                <!-- Langkah 2: Kondisi kesehatan -->
                 <div class="flex gap-4">
                     <div class="flex flex-col items-center shrink-0">
                         <div class="w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold flex items-center justify-center">2</div>
                         <div class="w-px flex-1 bg-slate-200 mt-2"></div>
                     </div>
                     <div class="flex-1 pb-2">
-                        <h2 class="font-bold text-base text-slate-900">Ceritakan Kondisi Kesehatanmu</h2>
-                        <p class="text-xs text-slate-500 mb-4">Untuk tiap kondisi, pilih seberapa yakin kamu bahwa itu menggambarkan kondisimu.</p>
+                        <h2 class="font-bold text-base text-slate-900">Riwayat Medis Khusus</h2>
+                        <p class="text-xs text-slate-500 mb-4">Tentukan probabilitas atau tingkat keyakinan Anda terhadap kondisi klinis berikut.</p>
 
                         <div class="space-y-3">
                             {% for kode, teks in kondisi.items() %}
@@ -103,49 +101,42 @@
                                     </label>
                                     <select name="{{ kode }}" class="w-full sm:w-auto bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 p-2 shadow-sm cursor-pointer outline-none">
                                         <option value="0">Tidak / Tidak Tahu</option>
-                                        <option value="0.4">Mungkin Iya</option>
-                                        <option value="0.7">Yakin</option>
-                                        <option value="1.0">Sangat Yakin</option>
+                                        <option value="0.4">Mungkin Iya (Gejala Ringan)</option>
+                                        <option value="0.7">Yakin (Sering Terjadi)</option>
+                                        <option value="1.0">Sangat Yakin (Terdiagnosis)</option>
                                     </select>
                                 </div>
-                                {% if kode == 'K01' or kode == 'K02' %}
-                                <p id="hint-{{ kode }}" class="text-[11px] text-emerald-700 mt-1.5 ml-0.5"></p>
-                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
 
-                <!-- Langkah 3: Data tambahan -->
                 <div class="flex gap-4">
                     <div class="flex flex-col items-center shrink-0">
                         <div class="w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold flex items-center justify-center">3</div>
                     </div>
                     <div class="flex-1">
-                        <h2 class="font-bold text-base text-slate-900">Lengkapi Data Tambahan</h2>
-                        <p class="text-xs text-slate-500 mb-4">Beberapa data lagi supaya rekomendasinya makin akurat.</p>
+                        <h2 class="font-bold text-base text-slate-900">Parameter Gaya Hidup</h2>
+                        <p class="text-xs text-slate-500 mb-4">Mesin inferensi akan menggunakan data ini untuk mencocokkan anjuran aktivitas harian.</p>
 
                         <div class="space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg bg-slate-50 border border-slate-100">
-                                <label class="text-sm font-medium text-slate-700">BMI (dari Langkah 1)</label>
-                                <input type="text" id="bmi_value_display" disabled placeholder="Isi Langkah 1 dahulu"
-                                    class="w-full sm:w-40 bg-slate-100 border border-slate-200 text-slate-500 text-sm rounded-lg p-2 shadow-sm outline-none cursor-not-allowed">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                                <label class="text-sm font-medium text-slate-700">
+                                    Frekuensi Konsumsi Manis / Minggu <br>
+                                    <span class="text-[10px] text-slate-400 font-normal">(Es teh manis, kopi gula aren, dessert, minuman kemasan)</span>
+                                </label>
+                                <input type="number" name="manis_value" min="0" placeholder="Contoh: 5" required class="w-full sm:w-40 bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 p-2 shadow-sm outline-none">
                             </div>
 
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
-                                <label class="text-sm font-medium text-slate-700">Kadar Gula Darah (mg/dL)</label>
-                                <input type="number" name="gula_value" placeholder="Contoh: 120" required class="w-full sm:w-40 bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 p-2 shadow-sm outline-none">
-                            </div>
-
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
-                                <label class="text-sm font-medium text-slate-700">Tingkat Aktivitas Fisik</label>
+                                <label class="text-sm font-medium text-slate-700">Intensitas Aktivitas Fisik</label>
                                 <select name="aktivitas_value" required class="w-full sm:w-40 bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 p-2 shadow-sm cursor-pointer outline-none">
-                                    <option value="1">Sangat Jarang Gerak</option>
-                                    <option value="2">Jarang Olahraga</option>
-                                    <option value="3">Aktivitas Sedang</option>
-                                    <option value="4">Sering Olahraga</option>
-                                    <option value="5">Pekerja Fisik Berat / Atlet</option>
+                                    <option value="1">Sangat Sedentary (Duduk sepanjang hari)</option>
+                                    <option value="2">Pasif (Olahraga 1-2x per bulan)</option>
+                                    <option value="3">Sedang (Bergerak normal tiap hari)</option>
+                                    <option value="4">Aktif (Rutin olahraga 3-4x seminggu)</option>
+                                    <option value="5">Sangat Aktif (Atlet / Pekerja Fisik)</option>
                                 </select>
                             </div>
                         </div>
@@ -154,9 +145,9 @@
 
                 <div class="pt-2 border-t border-slate-100">
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm py-3 px-4 rounded-lg transition-colors shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-                        Lihat Rekomendasi Diet
+                        Proses Analisis Pakar
                     </button>
-                    <p class="text-[11px] text-slate-400 text-center mt-2">Rekomendasi akan muncul di panel sebelah kanan.</p>
+                    <p class="text-[11px] text-slate-400 text-center mt-2">Menjalankan inferensi hybrid: Certainty Factor & Minimum Distance.</p>
                 </div>
             </form>
 
@@ -165,13 +156,13 @@
                 <div class="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm min-h-[300px] flex flex-col justify-between">
                     <div>
                         <div class="border-b border-slate-100 pb-3 mb-4">
-                            <h2 class="font-bold text-base text-slate-900">Rekomendasi Diet Untukmu</h2>
-                            <p class="text-xs text-slate-500">Diurutkan dari yang paling sesuai dengan kondisimu.</p>
+                            <h2 class="font-bold text-base text-slate-900">Keputusan Sistem Pakar</h2>
+                            <p class="text-xs text-slate-500">Sistem mengalkulasi kemungkinan dan menampilkan 1 rekomendasi terbaik untuk Anda.</p>
                         </div>
 
                         {% if input_kosong %}
                         <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 text-xs text-slate-600 leading-relaxed">
-                            Datanya masih kosong nih. Yuk isi dulu formulir di sebelah kiri, minimal salah satu bagian ya.
+                            Parameter kuesioner belum lengkap. Lengkapi Langkah 1 hingga 3 agar mesin inferensi dapat memulai perhitungan klasifikasi.
                         </div>
 
                         {% elif rekomendasi is none %}
@@ -179,45 +170,49 @@
                             <svg class="mx-auto h-12 w-12 mb-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            <p class="text-xs font-medium px-4">Lengkapi 3 langkah di sebelah kiri untuk melihat rekomendasi diet.</p>
+                            <p class="text-xs font-medium px-4">Siap untuk memproses data dari metrik Anda.</p>
                         </div>
 
                         {% elif rekomendasi|length == 0 %}
                         <div class="bg-amber-50 border border-amber-200 text-amber-800 rounded-lg p-4 text-xs leading-relaxed">
-                            Belum ada rekomendasi yang cocok dari data yang kamu masukkan. Coba periksa kembali jawabanmu.
+                            Pola yang Anda masukkan belum memiliki korelasi kuat di dalam basis pengetahuan kami. Coba periksa kembali nilai yang Anda masukkan.
                         </div>
 
                         {% else %}
                         <div class="space-y-3 animate-fade-in">
                             {% for diet in rekomendasi %}
-                            <div class="p-4 rounded-xl border {% if loop.first %}border-emerald-500 bg-emerald-50/30{% else %}border-slate-200 bg-white{% endif %} transition">
-                                {% if loop.first %}
+                            <div class="p-4 rounded-xl border border-emerald-500 bg-emerald-50/30 transition shadow-sm">
                                 <div class="mb-2 inline-block bg-emerald-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wide">
-                                    Rekomendasi Utama
+                                    Rekomendasi Final (Top 1)
                                 </div>
-                                {% endif %}
                                 <div class="flex justify-between items-start gap-2 mb-1">
                                     <h3 class="font-bold text-sm text-slate-900 leading-tight">{{ diet.nama }}</h3>
-                                    <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full {% if loop.first %}bg-emerald-600 text-white{% else %}bg-slate-100 text-slate-600{% endif %}">
-                                        Cocok {{ diet.skor_gabungan }}%
-                                    </span>
                                 </div>
+                                
+                                <div class="mb-4 inline-flex items-center gap-1.5 px-2 py-1 bg-white border border-emerald-200 rounded text-[11px] text-emerald-800 font-medium">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Tingkat Kecocokan: {{ diet.skor_gabungan }}%
+                                </div>
+
                                 <p class="text-xs text-slate-600 mb-3 leading-relaxed">{{ diet.deskripsi }}</p>
+                                
                                 <div class="bg-white border border-slate-200 rounded-lg p-3 text-xs mb-2">
-                                    <span class="font-bold text-slate-700 block mb-1 text-[11px] uppercase tracking-wider">Rencana Menu</span>
-                                    <p class="text-slate-600 italic">"{{ diet.menu }}"</p>
+                                    <span class="font-bold text-slate-700 block mb-1 text-[11px] uppercase tracking-wider">🍽️ Modifikasi Nutrisi Harian</span>
+                                    <p class="text-slate-600 italic mt-1">"{{ diet.menu }}"</p>
                                 </div>
+
+                                <div class="bg-emerald-50/70 border border-emerald-200 rounded-lg p-3 text-xs mb-3">
+                                    <span class="font-bold text-emerald-800 block mb-1 text-[11px] uppercase tracking-wider">💡 Intervensi Gaya Hidup</span>
+                                    <p class="text-emerald-700 leading-relaxed">{{ diet.gaya_hidup }}</p>
+                                </div>
+
                                 {% if diet.skor_gejala is not none and diet.skor_fisik is not none %}
-                                <p class="text-[10px] text-slate-400">
-                                    Berdasar gejala yang kamu rasakan: {{ diet.skor_gejala }}% • berdasar data fisikmu: {{ diet.skor_fisik }}%
+                                <p class="text-[10px] text-slate-400 mt-2 pt-2 border-t border-emerald-100/50">
+                                    *Kecocokan Gejala: {{ diet.skor_gejala }}% | Kecocokan Fisik: {{ diet.skor_fisik }}%
                                 </p>
                                 {% endif %}
                             </div>
                             {% endfor %}
-
-                            <p class="text-[10px] text-slate-400 text-center pt-2">
-                                Analisis ini menggabungkan dua metode sistem pakar: Certainty Factor (dari gejala) dan Minimum Distance Classifier (dari data fisik).
-                            </p>
                         </div>
                         {% endif %}
                     </div>
@@ -234,20 +229,16 @@
             const hasilEl = document.getElementById('bmi-hasil');
             const kategoriEl = document.getElementById('bmi-kategori');
             const hiddenInput = document.getElementById('bmi_value_hidden');
-            const displayInput = document.getElementById('bmi_value_display');
-            const hintK01 = document.getElementById('hint-K01');
-            const hintK02 = document.getElementById('hint-K02');
 
+            // Handling saat input dibersihkan atau belum valid
             if (!berat || !tinggiCm || tinggiCm <= 0) {
                 hasilEl.textContent = '-';
-                kategoriEl.textContent = 'isi data di atas';
+                kategoriEl.textContent = 'menunggu data';
                 hiddenInput.value = '';
-                displayInput.value = '';
-                if (hintK01) hintK01.textContent = '';
-                if (hintK02) hintK02.textContent = '';
                 return;
             }
 
+            // Kalkulasi matematis Indeks Massa Tubuh
             const tinggiM = tinggiCm / 100;
             const bmi = berat / (tinggiM * tinggiM);
             const bmiRounded = bmi.toFixed(1);
@@ -259,23 +250,19 @@
                 kategori = 'Obesitas';
             }
 
+            // Injeksi nilai untuk antarmuka pengguna dan payload tersembunyi
             hasilEl.textContent = bmiRounded;
             kategoriEl.textContent = kategori;
             hiddenInput.value = bmiRounded;
-            displayInput.value = bmiRounded + ' (' + kategori + ')';
-
-            const teksHint = 'BMI kamu saat ini: ' + bmiRounded + ' (' + kategori + ')';
-            if (hintK01) hintK01.textContent = teksHint;
-            if (hintK02) hintK02.textContent = teksHint;
         }
 
         document.getElementById('form-gizi').addEventListener('submit', function (e) {
             const hiddenInput = document.getElementById('bmi_value_hidden');
             if (!hiddenInput.value) {
-                e.preventDefault();
+                e.preventDefault(); // Mencegah pengiriman data cacat ke mesin inferensi
                 hitungBMI();
                 document.getElementById('berat').focus();
-                alert('Isi berat dan tinggi badan pada Langkah 1 terlebih dahulu.');
+                alert('Peringatan: Evaluasi Indeks Massa Tubuh (Langkah 1) belum terisi dengan data numerik yang valid.');
             }
         });
     </script>

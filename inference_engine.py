@@ -1,4 +1,4 @@
-from knowledge_base import RULES, DIET_PLANS
+from knowledge_base import RULES, REKOMENDASI_GIZI
 
 def hitung_certainty_factor(user_responses):
     hasil_diet = {}
@@ -28,9 +28,10 @@ def hitung_certainty_factor(user_responses):
         if cf_nilai > 0:
             rekomendasi_akhir.append({
                 'kode': kode,
-                'nama': DIET_PLANS[kode]['nama'],
-                'deskripsi': DIET_PLANS[kode]['deskripsi'],
-                'menu': DIET_PLANS[kode]['menu'],
+                'nama': REKOMENDASI_GIZI[kode]['nama'],
+                'deskripsi': REKOMENDASI_GIZI[kode]['deskripsi'],
+                'menu': REKOMENDASI_GIZI[kode]['menu'],
+                'gaya_hidup': REKOMENDASI_GIZI[kode]['gaya_hidup'], # Tambahan baru
                 'keyakinan': round(cf_nilai * 100, 2)
             })
             
